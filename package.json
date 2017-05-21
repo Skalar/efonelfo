@@ -4,6 +4,10 @@
   "license": "MIT",
   "repository": "skalar/efonelfo",
   "main": "lib/index.js",
+  "files": [
+    "README.md",
+    "lib/*"
+  ],
   "scripts": {
     "build": "yarn run clean && babel src --minified --compact true --source-maps false -d lib",
     "clean": "rm -fr lib coverage .nyc_output",

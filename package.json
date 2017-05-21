@@ -8,6 +8,9 @@
     "README.md",
     "lib/*"
   ],
+  "engines": {
+    "node": ">= 7.10.0"
+  },
   "scripts": {
     "build": "yarn run clean && babel src --minified --compact true --source-maps false -d lib",
     "clean": "rm -fr lib coverage .nyc_output",

@@ -12,10 +12,6 @@ const withLines = {
     return line
   },
 
-  addLine(values) {
-    return this.push(values)
-  },
-
   linesOfType(type) {
     return this.lines.filter(line => line.PostType === type)
   },

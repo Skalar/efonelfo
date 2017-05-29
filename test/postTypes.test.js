@@ -8,7 +8,7 @@ test('PostTypes', t => {
 
   // Adding a line using a PostType constructor
   const date = new Date(2017, 4, 1)
-  const bl1 = bh.addLine(BL({
+  const bl1 = bh.push(BL({
     LinjeNr: 1,
     BestNr: 'abc',
     VareMrk: 4,
@@ -42,7 +42,7 @@ test('PostTypes', t => {
   t.equal(bl1.Ant, 10)
 
   // Add a line using plain object literal
-  const bl2 = bh.addLine({PostType: 'BL', LinjeNr: 14})
+  const bl2 = bh.push({PostType: 'BL', LinjeNr: 14})
   t.deepEqual(bl2, {
     PostType: 'BL',
     LinjeNr: 14,
@@ -63,12 +63,12 @@ test('PostTypes', t => {
   t.equal(bh.lines.length, 2)
 
   // Add a BT line to the last BL
-  bl2.addLine(BT({FriTekst: 'haha'}))
+  bl2.push(BT({FriTekst: 'haha'}))
   t.equal(bl2.lines.length, 1)
   t.deepEqual(bl2.linesOfType('BT'), [{PostType: 'BT', FriTekst: 'haha'}])
 
   // Add a BA line to the last BL
-  bl2.addLine(BA())
+  bl2.push(BA())
   t.equal(bl2.lines.length, 2)
   t.equal(bl2.linesOfType('BA').length, 1)
   t.equal(bl1.lines.length, 0)

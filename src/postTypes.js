@@ -16,11 +16,15 @@ const withLines = {
     return this.lines.filter(line => line.PostType === type)
   },
 
-  findLine(attributes) {
+  filter(attributes) {
     const props = Object.keys(attributes)
-    return this.lines.find(line => {
+    return this.lines.filter(line => {
       return !props.find(prop => line[prop] !== attributes[prop])
     })
+  },
+
+  find(attributes) {
+    return this.filter(attributes)[0]
   },
 
   isValidLine(type) {

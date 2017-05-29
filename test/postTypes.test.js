@@ -73,10 +73,15 @@ test('PostTypes', t => {
   t.equal(bl2.linesOfType('BA').length, 1)
   t.equal(bl1.lines.length, 0)
 
-  // findLine using key/value
-  t.deepEqual(bl2.findLine({FriTekst: 'haha'}), {PostType: 'BT', FriTekst: 'haha'})
-  t.deepEqual(bh.findLine({PostType: 'BL', LinjeNr: 1, Ant: 10}), bl1)
-  t.equal(bh.findLine({VareNr: '999001123'}), undefined)
+  // find line using key/value
+  t.deepEqual(bl2.find({FriTekst: 'haha'}), {PostType: 'BT', FriTekst: 'haha'})
+  t.deepEqual(bh.find({PostType: 'BL', LinjeNr: 1, Ant: 10}), bl1)
+  t.equal(bh.find({VareNr: '999001123'}), undefined)
+
+  // filter lines using key/value
+  t.equal(bh.filter({PostType: 'BL'}).length, 2)
+  t.equal(bh.filter({PostType: 'BL', Ant: 10}).length, 1)
+  t.equal(bh.filter({PostType: 'BL', Ant: 11}).length, 0)
 
   t.end()
 })

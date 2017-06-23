@@ -63,6 +63,7 @@ export const parseString = stringOrBuffer => {
       let lineNumber = 0
       while ((row = parser.read())) {
         lineNumber += 1
+        if (row.length === 1) continue
         try {
           const post = makePostType(row)
           const line = findLine(post) || result

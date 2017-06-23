@@ -5,9 +5,7 @@ import schema from './schema'
 const withLines = {
   lines: [],
   push(values) {
-    const line = values.schema
-      ? values
-      : PostTypes[values.PostType](values)
+    const line = values.schema ? values : PostTypes[values.PostType](values)
     this.lines.push(line)
     return line
   },
@@ -29,39 +27,40 @@ const withLines = {
 
   isValidLine(type) {
     return this.schema.lineTypes && this.schema.lineTypes.includes(type)
-  }
+  },
 }
 
-const defineProperties = (postType) => {
-  return Object.defineProperties(postType, postType.schema.propTypes.reduce((props, prop) => {
-    if (typeof prop.name !== 'undefined') {
-      props[prop.name] = {
-        value: prop.value,
-        enumerable: true,
-        writable: true,
-        configurable: true
+const defineProperties = postType => {
+  return Object.defineProperties(
+    postType,
+    postType.schema.propTypes.reduce((props, prop) => {
+      if (typeof prop.name !== 'undefined') {
+        props[prop.name] = {
+          value: prop.value,
+          enumerable: true,
+          writable: true,
+          configurable: true,
+        }
       }
-    }
-    return props
-  }, {}))
+      return props
+    }, {})
+  )
 }
 
 const definePostType = function(schema) {
-  const postType = Object.assign({},
-    schema.lineTypes ? withLines : {}
-  )
+  const postType = Object.assign({}, schema.lineTypes ? withLines : {})
 
-  return Object.create(postType, { schema: { value: schema } })
+  return Object.create(postType, {schema: {value: schema}})
 }
 
-const createPostType = (postType) => {
+const createPostType = postType => {
   return (attributes = {}) => {
-    const type = defineProperties(Object.create(postType, {lines: { value: [] }}))
+    const type = defineProperties(Object.create(postType, {lines: {value: []}}))
     return Object.assign(type, attributes)
   }
 }
 
-export const createPostTypes = (postTypes) => {
+export const createPostTypes = postTypes => {
   return Object.keys(postTypes).reduce((acc, cur) => {
     const postType = definePostType(postTypes[cur])
     acc[cur] = createPostType(postType)

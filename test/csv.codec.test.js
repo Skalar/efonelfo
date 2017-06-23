@@ -5,7 +5,11 @@ test('CSV codec: decode', t => {
   // String decoding
   t.equal(decode({value: 'foo'}), 'foo')
   t.equal(decode({value: 'foo', type: 'String'}), 'foo')
-  t.equal(decode({value: 'foo.bar;semicolon', type: 'String'}), 'foo.bar;semicolon')
+  t.equal(
+    decode({value: 'foo.bar;semicolon', type: 'String'}),
+    'foo.bar;semicolon'
+  )
+
   t.equal(decode({value: '', type: 'String'}), undefined)
   t.equal(decode({type: 'String'}), undefined)
 

@@ -1,15 +1,17 @@
 import {encode} from './codec'
 
-const toCSV = (post) => {
-  const serializeVX = (post) => {
+const toCSV = post => {
+  const serializeVX = post => {
     const schemaProps = post.schema.propTypes.map(prop => prop.name)
     const property = Object.keys(post).find(prop => !schemaProps.includes(prop))
     return [post.PostType, property, encode({value: post[property]})].join(';')
   }
 
-  const serialize = (post) => {
+  const serialize = post => {
     const csv = [
-      post.schema.propTypes.map(prop => encode({...prop, value: post[prop.name]})).join(';')
+      post.schema.propTypes
+        .map(prop => encode({...prop, value: post[prop.name]}))
+        .join(';'),
     ]
 
     if (post.schema.lineTypes) {

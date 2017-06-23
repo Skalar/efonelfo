@@ -13,7 +13,8 @@ test('CSV: parsing a string', async t => {
 })
 
 test('CSV: parse string with unknown posttypes', async t => {
-  const csv = 'BX;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;'
+  const csv =
+    'BX;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;'
   parseCSV(csv)
     .then(_ => t.fail('Unexpected assertion'))
     .catch(err => t.equal(err.message, 'Unknown linetype: BX'))

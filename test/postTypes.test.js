@@ -8,18 +8,20 @@ test('PostTypes', t => {
 
   // Adding a line using a PostType constructor
   const date = new Date(2017, 4, 1)
-  const bl1 = bh.push(BL({
-    LinjeNr: 1,
-    BestNr: 'abc',
-    VareMrk: 4,
-    VareNr: '666',
-    VaBetg: 'Klosettet',
-    Ant: 4,
-    PrisEnhet: 'STK',
-    LevDato: date,
-    DelLev: true,
-    AltKode: false
-  }))
+  const bl1 = bh.push(
+    BL({
+      LinjeNr: 1,
+      BestNr: 'abc',
+      VareMrk: 4,
+      VareNr: '666',
+      VaBetg: 'Klosettet',
+      Ant: 4,
+      PrisEnhet: 'STK',
+      LevDato: date,
+      DelLev: true,
+      AltKode: false,
+    })
+  )
 
   t.deepEqual(bl1, {
     PostType: 'BL',
@@ -35,7 +37,7 @@ test('PostTypes', t => {
     LevDato: date,
     KjøpersRef: undefined,
     DelLev: true,
-    AltKode: false
+    AltKode: false,
   })
 
   bl1.Ant = 10
@@ -57,7 +59,7 @@ test('PostTypes', t => {
     LevDato: undefined,
     KjøpersRef: undefined,
     DelLev: true,
-    AltKode: true
+    AltKode: true,
   })
 
   t.equal(bh.lines.length, 2)

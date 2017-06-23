@@ -1,8 +1,9 @@
 /* eslint-disable no-magic-numbers */
 import iconv from 'iconv-lite'
 
-const isNothing = (value) => typeof value === 'undefined' || value === null || value === ''
-const leftPad = (str) => String(`00${str}`).slice(-2)
+const isNothing = value =>
+  typeof value === 'undefined' || value === null || value === ''
+const leftPad = str => String(`00${str}`).slice(-2)
 
 const codecs = {
   String: {
@@ -16,7 +17,7 @@ const codecs = {
         .toString()
         .replace(/;/, '')
         .substr(0, limit)
-    }
+    },
   },
 
   Number: {
@@ -29,9 +30,9 @@ const codecs = {
     encode({value = '', decimals}) {
       if (isNaN(value)) return ''
       return Number.isFinite(decimals)
-          ? value / (1.0 / 10 ** Number(decimals))
-          : value
-    }
+        ? value / (1.0 / 10 ** Number(decimals))
+        : value
+    },
   },
 
   Date: {
@@ -43,25 +44,36 @@ const codecs = {
     },
     encode({value}) {
       return value instanceof Date
-        ? [value.getFullYear(), leftPad(value.getMonth() + 1), leftPad(value.getDate())].join('')
+        ? [
+          value.getFullYear(),
+          leftPad(value.getMonth() + 1),
+          leftPad(value.getDate()),
+        ].join('')
         : ''
-    }
+    },
   },
 
   Boolean: {
     decode({value, defaultValue}) {
       if (isNothing(value)) return !!defaultValue
-      return typeof value === 'string'
-        ? value.toUpperCase() === 'J'
-        : !!value
+      return typeof value === 'string' ? value.toUpperCase() === 'J' : !!value
     },
 
     encode({value, defaultValue}) {
-      if (isNothing(value)) return defaultValue ? this.encode({value: defaultValue}) : ''
+      if (isNothing(value)) {
+        return defaultValue ? this.encode({value: defaultValue}) : ''
+      }
       return value ? 'J' : 'N'
-    }
-  }
+    },
+  },
 }
 
-export const encode = ({value, type = 'String', decimals, limit, defaultValue}) => codecs[type].encode({value, type, decimals, limit, defaultValue})
-export const decode = ({value, type = 'String', defaultValue, decimals}) => codecs[type].decode({value, defaultValue, decimals})
+export const encode = ({
+  value,
+  type = 'String',
+  decimals,
+  limit,
+  defaultValue,
+}) => codecs[type].encode({value, type, decimals, limit, defaultValue})
+export const decode = ({value, type = 'String', defaultValue, decimals}) =>
+  codecs[type].decode({value, defaultValue, decimals})

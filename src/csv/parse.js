@@ -60,10 +60,16 @@ export const parseString = stringOrBuffer => {
 
     parser.on('readable', _ => {
       let row
+      let lineNumber = 0
       while ((row = parser.read())) {
-        const post = makePostType(row)
-        const line = findLine(post) || result
-        line.push(post)
+        lineNumber += 1
+        try {
+          const post = makePostType(row)
+          const line = findLine(post) || result
+          line.push(post)
+        } catch (err) {
+          throw new Error(`Error parsing line ${lineNumber}: ${err.message}`)
+        }
       }
     })
 

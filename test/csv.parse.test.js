@@ -17,7 +17,9 @@ test('CSV: parse string with unknown posttypes', async t => {
     'BX;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;'
   parseCSV(csv)
     .then(_ => t.fail('Unexpected assertion'))
-    .catch(err => t.equal(err.message, 'Unknown linetype: BX'))
+    .catch(err =>
+      t.equal(err.message, 'Error parsing line 1: Unknown linetype: BX')
+    )
   t.end()
 })
 
@@ -67,7 +69,9 @@ test('CSV: parse file', async t => {
 test('CSV: parse file with unknown posttype', t => {
   parseCSVFile('test/fixtures/unknown.csv')
     .then(_ => t.fail)
-    .catch(err => t.equal(err.message, 'Unknown linetype: FOO'))
+    .catch(err =>
+      t.equal(err.message, 'Error parsing line 1: Unknown linetype: FOO')
+    )
   t.end()
 })
 

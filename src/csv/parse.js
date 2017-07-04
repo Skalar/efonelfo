@@ -32,9 +32,9 @@ const makePostType = row => {
 }
 
 export const parseString = stringOrBuffer => {
-  const csv = Buffer.isBuffer(stringOrBuffer)
-    ? iconv.decode(stringOrBuffer, 'latin1')
-    : iconv.decode(Buffer.from(stringOrBuffer), 'latin1')
+  const decodedString = Buffer.isBuffer(stringOrBuffer)
+    ? iconv.decode(stringOrBuffer, 'iso-8859-1')
+    : stringOrBuffer
 
   return new Promise((resolve, reject) => {
     const result = []
@@ -52,8 +52,8 @@ export const parseString = stringOrBuffer => {
       const head = result[result.length - 1]
       const lastLine = head && head.lines[head.lines.length - 1]
       return lastLine &&
-        lastLine.schema.lineTypes &&
-        lastLine.isValidLine(post.PostType)
+      lastLine.schema.lineTypes &&
+      lastLine.isValidLine(post.PostType)
         ? lastLine
         : head
     }
@@ -76,15 +76,11 @@ export const parseString = stringOrBuffer => {
 
     parser.on('finish', _ => resolve(result))
     parser.on('error', msg => reject(msg))
-    parser.write(csv)
+    parser.write(decodedString)
     parser.end()
   })
 }
 
 export const parseFile = async filename => {
-  const csv = Buffer.from(
-    fs.readFileSync(filename, {encoding: 'binary'}),
-    'latin1'
-  )
-  return parseString(csv)
+  return parseString(fs.readFileSync(filename))
 }

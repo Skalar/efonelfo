@@ -45,8 +45,8 @@ const bh = BH({
 })
 
 bh.EksternRef = 'my reference'
-bh.push({PostType: 'BL', LinjeNr: 1, Ant: 3, PrisEnhet: 'EA', DelLev: true})
-bh.push(BL({LinjeNr: 2, Ant: 10, VareNr: '12345'}))
+bh.push({PostType: 'BL', LinjeNr: '1', Ant: 3, PrisEnhet: 'EA', DelLev: true})
+bh.push(BL({LinjeNr: '2', Ant: 10, VareNr: '12345'}))
 
 // Generate CSV
 console.log(toCSV(bh))

@@ -10,7 +10,7 @@ test('PostTypes', t => {
   const date = new Date(2017, 4, 1)
   const bl1 = bh.push(
     BL({
-      LinjeNr: 1,
+      LinjeNr: '1',
       BestNr: 'abc',
       VareMrk: 4,
       VareNr: '666',
@@ -25,7 +25,7 @@ test('PostTypes', t => {
 
   t.deepEqual(bl1, {
     PostType: 'BL',
-    LinjeNr: 1,
+    LinjeNr: '1',
     BestNr: 'abc',
     VareMrk: 4,
     VareNr: '666',
@@ -44,10 +44,10 @@ test('PostTypes', t => {
   t.equal(bl1.Ant, 10)
 
   // Add a line using plain object literal
-  const bl2 = bh.push({PostType: 'BL', LinjeNr: 14})
+  const bl2 = bh.push({PostType: 'BL', LinjeNr: '14'})
   t.deepEqual(bl2, {
     PostType: 'BL',
-    LinjeNr: 14,
+    LinjeNr: '14',
     BestNr: undefined,
     VareMrk: undefined,
     VareNr: undefined,
@@ -77,7 +77,7 @@ test('PostTypes', t => {
 
   // find line using key/value
   t.deepEqual(bl2.find({FriTekst: 'haha'}), {PostType: 'BT', FriTekst: 'haha'})
-  t.deepEqual(bh.find({PostType: 'BL', LinjeNr: 1, Ant: 10}), bl1)
+  t.deepEqual(bh.find({PostType: 'BL', LinjeNr: '1', Ant: 10}), bl1)
   t.equal(bh.find({VareNr: '999001123'}), undefined)
 
   // filter lines using key/value

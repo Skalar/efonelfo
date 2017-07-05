@@ -25,7 +25,7 @@ test('CSV: serialize BH with lines', t => {
   bh.push(
     BL({
       PostType: 'BL',
-      LinjeNr: 1,
+      LinjeNr: '1',
       Ant: 2.2,
       LevDato: new Date(2017, 0, 4),
       DelLev: true,
@@ -34,7 +34,7 @@ test('CSV: serialize BH with lines', t => {
   )
   bh.push({
     PostType: 'BL',
-    LinjeNr: 2,
+    LinjeNr: '2',
     Ant: 5,
     LevDato: new Date(2017, 0, 1),
     DelLev: false,
@@ -73,7 +73,7 @@ test('CSV: serialize VX', t => {
 
 test('CSV: serialize BL', t => {
   const bl = BL({
-    LinjeNr: 1,
+    LinjeNr: '1',
     BestNr: 'abc',
     VareMrk: 4,
     VareNr: '654321',

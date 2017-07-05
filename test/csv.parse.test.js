@@ -51,7 +51,7 @@ test('CSV: parse file', async t => {
   t.equal(bh.lines.length, 1)
   const bl = bh.lines[0]
   t.equal(bl.PostType, 'BL')
-  t.equal(bl.LinjeNr, 1)
+  t.equal(bl.LinjeNr, '1')
   t.equal(bl.BestNr, '2091')
   t.equal(bl.VareMrk, 1)
   t.equal(bl.VareNr, '6047602')

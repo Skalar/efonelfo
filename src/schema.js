@@ -55,8 +55,8 @@ const CHandDHPropTypes = [
 
 const CLandDLPropTypes = [
   {name: 'PostType', type: 'String', limit: 2, value: 'CL'},
-  {name: 'LinjeNrBekr', type: 'Number', limit: 4},
-  {name: 'LinjeNrBe', type: 'Number', limit: 4},
+  {name: 'LinjeNrBekr', type: 'String', limit: 4},
+  {name: 'LinjeNrBe', type: 'String', limit: 4},
   {name: 'VareMrk', type: 'Number', limit: 1, required: true},
   {name: 'VareNr', type: 'String', limit: 14, required: true},
   {name: 'VaBetg', type: 'String', limit: 30, required: true},
@@ -100,7 +100,7 @@ export const schema = {
   BL: {
     propTypes: [
       {name: 'PostType', type: 'String', limit: 2, value: 'BL'},
-      {name: 'LinjeNr', type: 'Number', limit: 4},
+      {name: 'LinjeNr', type: 'String', limit: 4},
       {name: 'BestNr', type: 'String', limit: 10, required: true},
       {name: 'VareMrk', type: 'Number', limit: 1, required: true},
       {name: 'VareNr', type: 'String', limit: 14, required: true},

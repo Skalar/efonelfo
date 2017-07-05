@@ -1,5 +1,5 @@
 import fs from 'fs'
-import parse from 'csv-parse'
+import parseCSV from 'csv-parse'
 import {decode} from './codec'
 import PostTypes from '../postTypes'
 import iconv from 'iconv-lite'
@@ -31,14 +31,14 @@ const makePostType = row => {
   return Object.assign(postType, values)
 }
 
-export const parseString = stringOrBuffer => {
+export const parse = stringOrBuffer => {
   const decodedString = Buffer.isBuffer(stringOrBuffer)
     ? iconv.decode(stringOrBuffer, 'iso-8859-1')
     : stringOrBuffer
 
   return new Promise((resolve, reject) => {
     const result = []
-    const parser = parse({
+    const parser = parseCSV({
       columns: null,
       trim: true,
       relax: true,
@@ -82,5 +82,5 @@ export const parseString = stringOrBuffer => {
 }
 
 export const parseFile = async filename => {
-  return parseString(fs.readFileSync(filename))
+  return parse(fs.readFileSync(filename, {encoding: 'binary'}))
 }

@@ -44,7 +44,6 @@ test('CSV codec: encode', t => {
   // String
   t.equal(encode({value: 'foo'}), 'foo')
   t.equal(encode({value: 'No;Semicolons'}), 'NoSemicolons')
-  t.equal(encode({value: 'IFÖ festeplugg'}), 'IF� festeplugg')
   t.equal(encode({value: 'Truncates by limit', limit: 5}), 'Trunc')
   t.equal(encode({}), '')
 

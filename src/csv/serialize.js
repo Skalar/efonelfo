@@ -1,35 +1,8 @@
-import {encode} from './codec'
+import iconv from 'iconv-lite'
+import serializePost from './serializePost'
 
-const toCSV = post => {
-  const serializeVX = post => {
-    const schemaProps = post.schema.propTypes.map(prop => prop.name)
-    const property = Object.keys(post).find(prop => !schemaProps.includes(prop))
-    return [post.PostType, property, encode({value: post[property]})].join(';')
-  }
-
-  const serialize = post => {
-    const csv = [
-      post.schema.propTypes
-        .map(prop => encode({...prop, value: post[prop.name]}))
-        .join(';'),
-    ]
-
-    if (post.schema.lineTypes) {
-      post.schema.lineTypes.forEach(lineType => {
-        const lines = post.linesOfType(lineType).map(toCSV)
-        if (lines.length) csv.push(lines.join('\n'))
-      })
-    }
-
-    return csv.join('\n')
-  }
-
-  switch (post.PostType) {
-    case 'VX':
-      return serializeVX(post)
-    default:
-      return serialize(post)
-  }
+function toCSV(post) {
+  return iconv.encode(serializePost(post), 'iso-8859-1')
 }
 
 export default toCSV

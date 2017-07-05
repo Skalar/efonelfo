@@ -17,7 +17,7 @@ const bh = BH({
 test('CSV: serialize BH', t => {
   const csv =
     'BH;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;'
-  t.equal(toCSV(bh), csv)
+  t.deepEqual(toCSV(bh), Buffer(csv))
   t.end()
 })
 
@@ -25,7 +25,7 @@ test('CSV: serialize BH with lines', t => {
   bh.push(
     BL({
       PostType: 'BL',
-      LinjeNr: '1',
+      LinjeNr: 1,
       Ant: 2.2,
       LevDato: new Date(2017, 0, 4),
       DelLev: true,
@@ -34,7 +34,7 @@ test('CSV: serialize BH with lines', t => {
   )
   bh.push({
     PostType: 'BL',
-    LinjeNr: '2',
+    LinjeNr: 2,
     Ant: 5,
     LevDato: new Date(2017, 0, 1),
     DelLev: false,
@@ -45,21 +45,21 @@ test('CSV: serialize BH with lines', t => {
 BL;1;;;;;;220;;;20170104;;J;N
 BL;2;;;;;;500;;;20170101;;N;N`
 
-  t.deepEqual(toCSV(bh), csv)
+  t.deepEqual(toCSV(bh), Buffer(csv))
 
   bh.lines[1].push({PostType: 'BT', FriTekst: 'Hello world'})
-  t.equal(toCSV(bh), `${csv}\nBT;Hello world`)
+  t.deepEqual(toCSV(bh), Buffer(`${csv}\nBT;Hello world`))
 
   bh.push({PostType: 'BT', FriTekst: 'Santa claus'})
   bh.Something = 'Unknown properties are ignored in csv'
 
-  t.equal(
+  t.deepEqual(
     toCSV(bh),
-    `BH;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;
+    Buffer(`BH;EFONELFO;4.0;;NO950349875MVA;2091;28579;;;19271;;19271;;;;;;;2091/19271;;;;20100602;;;;;;;;;;;;;;;;;;;;;;;;;;
 BT;Santa claus
 BL;1;;;;;;220;;;20170104;;J;N
 BL;2;;;;;;500;;;20170101;;N;N
-BT;Hello world`
+BT;Hello world`)
   )
 
   t.end()
@@ -67,13 +67,13 @@ BT;Hello world`
 
 test('CSV: serialize VX', t => {
   const vx = VX({BILDE: 'http://foo'})
-  t.equal(toCSV(vx), 'VX;BILDE;http://foo')
+  t.deepEqual(toCSV(vx), Buffer('VX;BILDE;http://foo'))
   t.end()
 })
 
 test('CSV: serialize BL', t => {
   const bl = BL({
-    LinjeNr: '1',
+    LinjeNr: 1,
     BestNr: 'abc',
     VareMrk: 4,
     VareNr: '654321',
@@ -86,13 +86,13 @@ test('CSV: serialize BL', t => {
   })
 
   const csv = 'BL;1;abc;4;654321;Dusjen;;400;STK;;20170501;;J;N'
-  t.equal(toCSV(bl), csv)
+  t.deepEqual(toCSV(bl), Buffer(csv))
 
   bl.push(BT({FriTekst: 'Hacked by chinese'}))
-  t.equal(toCSV(bl), `${csv}\nBT;Hacked by chinese`)
+  t.deepEqual(toCSV(bl), Buffer(`${csv}\nBT;Hacked by chinese`))
 
   bl.push(BA({VareMrk: 2, VareNr: '1234'}))
-  t.equal(toCSV(bl), `${csv}\nBA;2;1234\nBT;Hacked by chinese`)
+  t.deepEqual(toCSV(bl), Buffer(`${csv}\nBA;2;1234\nBT;Hacked by chinese`))
 
   t.end()
 })

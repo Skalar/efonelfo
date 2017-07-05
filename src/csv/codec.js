@@ -1,6 +1,4 @@
 /* eslint-disable no-magic-numbers */
-import iconv from 'iconv-lite'
-
 const isNothing = value =>
   typeof value === 'undefined' || value === null || value === ''
 const leftPad = str => String(`00${str}`).slice(-2)
@@ -12,11 +10,7 @@ const codecs = {
       // return isNothing(value) ? undefined : iconv.decode(Buffer.from(value.toString()), 'utf-8').toString()
     },
     encode({value = '', limit = 100}) {
-      return iconv
-        .encode(value.toString(), 'iso-8859-1')
-        .toString()
-        .replace(/;/, '')
-        .substr(0, limit)
+      return value.toString().toString().replace(/;/, '').substr(0, limit)
     },
   },
 
@@ -45,10 +39,10 @@ const codecs = {
     encode({value}) {
       return value instanceof Date
         ? [
-          value.getFullYear(),
-          leftPad(value.getMonth() + 1),
-          leftPad(value.getDate()),
-        ].join('')
+            value.getFullYear(),
+            leftPad(value.getMonth() + 1),
+            leftPad(value.getDate()),
+          ].join('')
         : ''
     },
   },

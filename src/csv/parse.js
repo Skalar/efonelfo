@@ -51,9 +51,7 @@ export const parse = stringOrBuffer => {
 
       const head = result[result.length - 1]
       const lastLine = head && head.lines[head.lines.length - 1]
-      return lastLine &&
-      lastLine.schema.lineTypes &&
-      lastLine.isValidLine(post.PostType)
+      return lastLine && lastLine.schema.lineTypes && lastLine.isValidLine(post.PostType)
         ? lastLine
         : head
     }
@@ -69,7 +67,7 @@ export const parse = stringOrBuffer => {
           const line = findLine(post) || result
           line.push(post)
         } catch (err) {
-          throw new Error(`Error parsing line ${lineNumber}: ${err.message}`)
+          return reject(`Error parsing line ${lineNumber}: ${err.message}`)
         }
       }
     })

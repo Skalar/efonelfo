@@ -76,7 +76,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
-    "csv-parse": "^1.2.0",
+    "csv-parse": "^2.4.0",
     "iconv-lite": "^0.4.18"
   }
 }

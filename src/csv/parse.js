@@ -43,6 +43,7 @@ export const parse = stringOrBuffer => {
       trim: true,
       relax: true,
       relax_column_count: true,
+      quote: false,
       delimiter: ';',
     })
 
